@@ -1,23 +1,28 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import ResetButton from './Components/ResetButton'
-import GameMessage from './Components/GameMessage'
-import GameBoard from './Components/GameBoard'
-import GameTitle from './Components/GameTitle'
-import GameTurn from './Components/GameTurn'
+import { useState, useEffect } from "react";
+import ResetButton from "./Components/ResetButton";
+import GameMessage from "./Components/GameMessage";
+import GameBoard from "./Components/GameBoard";
+import GameTitle from "./Components/GameTitle";
+import GameTurn from "./Components/GameTurn";
 
 export default function Home() {
   const defaultSize = 3;
-  const defaultBoard = [["", "", ""], ["", "", ""], ["", "", ""]]
+  const defaultBoard = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ];
   const defaultMessage = "";
   const [player, setPlayer] = useState(1);
   const [board, setBoard] = useState(defaultBoard);
   const [message, setMessage] = useState(defaultMessage);
   const [won, setWon] = useState(0);
-  const dynamicGameTurnColor = `rounded p-2 font-light ${player === 1 ?
-     'bg-red-100' : 'bg-green-100'}`;
-  
+  const dynamicGameTurnColor = `rounded p-2 font-light ${
+    player === 1 ? "bg-red-100" : "bg-green-100"
+  }`;
+
   function cellClicked(row: number, col: number) {
     if (won) {
       return;
@@ -32,10 +37,10 @@ export default function Home() {
     setBoard(updatedBoard);
     if (player == 2) {
       setPlayer(player - 1);
-      currVal = "X"
+      currVal = "X";
     } else {
       setPlayer(player + 1);
-      currVal = "O"
+      currVal = "O";
     }
     updatedBoard[row][col] = currVal;
 
@@ -45,7 +50,7 @@ export default function Home() {
   }
 
   function gameFull() {
-    const allNonEmpty = board.flat().every(item => item != "");
+    const allNonEmpty = board.flat().every((item) => item != "");
     if (!allNonEmpty) {
       return;
     }
@@ -54,7 +59,12 @@ export default function Home() {
   }
 
   function gameWon(currVal: string, row: number, col: number) {
-    if (!checkRows(currVal, col) && !checkCols(currVal, row) && !checkRightDiag(currVal) && !checkLeftDiag(currVal)) {
+    if (
+      !checkRows(currVal, col) &&
+      !checkCols(currVal, row) &&
+      !checkRightDiag(currVal) &&
+      !checkLeftDiag(currVal)
+    ) {
       return;
     }
 
@@ -63,7 +73,7 @@ export default function Home() {
   }
 
   function checkRows(currVal: string, colInd: number) {
-    for (let i = 0; i < defaultSize; i ++) {
+    for (let i = 0; i < defaultSize; i++) {
       if (board[i][colInd] != currVal) {
         return false;
       }
@@ -72,7 +82,7 @@ export default function Home() {
   }
 
   function checkCols(currVal: string, rowInd: number) {
-    for (let i = 0; i < defaultSize; i ++) {
+    for (let i = 0; i < defaultSize; i++) {
       if (board[rowInd][i] != currVal) {
         return false;
       }
@@ -84,7 +94,7 @@ export default function Home() {
   function checkRightDiag(currVal: string) {
     let row = 0;
     let col = 0;
-    for (let i = 0; i < defaultSize; i ++) {
+    for (let i = 0; i < defaultSize; i++) {
       if (board[row][col] != currVal) {
         return false;
       }
@@ -97,7 +107,7 @@ export default function Home() {
   function checkLeftDiag(currVal: string) {
     let row = 0;
     let col = defaultSize - 1;
-    for (let i = 0; i < defaultSize; i ++) {
+    for (let i = 0; i < defaultSize; i++) {
       if (board[row][col] != currVal) {
         return false;
       }
@@ -119,13 +129,16 @@ export default function Home() {
 
   return (
     <div>
-      <div id='game' className='flex items-center flex-col'>
-        <GameTitle title={"Tic Tac Toe Game"}/>
-        <GameTurn dynamicGameTurnColor={dynamicGameTurnColor} player={player}/>
-        <GameBoard board={board} cellClicked={cellClicked}/>
-        <GameMessage message={message}/>
-        <ResetButton resetGame={resetGame}/>
+      <div id="game" className="flex items-center flex-col">
+        <GameTitle title={"Tic Tac Toe Game"} />
+        <GameTurn dynamicGameTurnColor={dynamicGameTurnColor} player={player} />
+        <GameBoard board={board} cellClicked={cellClicked} />
+        <GameMessage message={message} />
+        <ResetButton resetGame={resetGame} />
+        <div id="navbar">
+          <nav className=" "></nav>
+        </div>
       </div>
     </div>
-  )
+  );
 }
