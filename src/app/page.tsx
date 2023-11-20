@@ -19,6 +19,7 @@ export default function Home() {
   const [board, setBoard] = useState(defaultBoard);
   const [message, setMessage] = useState(defaultMessage);
   const [won, setWon] = useState(0);
+  const [winner, setWinner] = useState<number | null>(null);
   const dynamicGameTurnColor = `rounded p-2 font-light ${
     player === 1 ? "bg-red-100" : "bg-green-100"
   }`;
@@ -69,6 +70,7 @@ export default function Home() {
     }
 
     setMessage("Player " + player + " won!\nReset for a new game!");
+    setWinner(player);
     setWon(1);
   }
 
@@ -125,6 +127,11 @@ export default function Home() {
       setMessage(defaultMessage);
     }, 5000);
     setWon(0);
+    setWinner(null);
+  }
+
+  function closeOverlay() {
+    setWinner(null);
   }
 
   return (
@@ -132,7 +139,7 @@ export default function Home() {
       <div id="game" className="flex items-center flex-col">
         <GameTitle title={"Tic Tac Toe Game"} />
         <GameTurn dynamicGameTurnColor={dynamicGameTurnColor} player={player} />
-        <GameBoard board={board} cellClicked={cellClicked} />
+        <GameBoard board={board} cellClicked={cellClicked} winner={winner} closeOverlay={closeOverlay} />
         <GameMessage message={message} />
         <ResetButton resetGame={resetGame} />
         <div id="navbar">

@@ -6,7 +6,7 @@ interface GameTitleProps {
 
 const GameTitle: React.FC<GameTitleProps> = ({title}) => {
     return (
-        <div id='game_title'>
+        <div className='text-lg' id='game_title'>
           <h1>{title}</h1>
         </div>
     )
